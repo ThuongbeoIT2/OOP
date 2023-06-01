@@ -1,0 +1,137 @@
+<style>
+  body {
+    background: rgb(34,193,195);
+    background: linear-gradient(0deg, rgba(34,193,195,1) 32%, rgba(170,204,38,1) 97%);
+  }
+  .wrapper {
+    width: 493px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    background-color: burlywood;
+    border-radius: 8px;
+    height: 315px;
+    box-shadow: 0px 3px 8px 2px #555555;
+  }
+  .title {
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-size: 33px;
+    margin: 23px 0px;
+    padding-bottom: 20px;
+  }
+  input[type=text], select {
+    width: 300px !important;
+    padding: 9px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  .req {
+    color: red;
+  }
+  .formRow {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+  .formLeft {
+    color: white;
+    width: 118px !important;
+  }
+  .formSubmit {
+    display: flex;
+    justify-content: flex-end;
+    gap: 19px;
+    padding-top: 30px;
+  }
+  .submit_btn {
+    padding: 6px 24px;
+    border: none;
+    border-radius: 3px;
+    background: darkred;
+    color: white;
+  }
+  .submit_btn:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
+  .reset_btn {
+    padding: 6px;
+    border: none;
+    border-radius: 3px;
+    background: #eee;
+    color: #333;
+  }
+  .reset_btn:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
+  .formValidate {
+    display: flex;
+    align-items: center;
+  }
+</style>
+
+<div class="wrapper">
+
+  <!-- Form -->
+  <form class="form" id="form" th:action="@{/nhapthem}" th:object="${count}" method="post" enctype="multipart/form-data">
+    <div class="widget">
+      <div class="title">
+        <span>Nhập Thêm Sách</span>
+      </div>
+
+      <div class="tab_container">
+        <div id='tab1' class="tab_content pd0">
+          <!-- Tên -->
+          <div class="formRow">
+            <div class="formValidate">
+              <label class="formLeft" for="param_name">Mã Sách </label>
+              <div class="formRight">
+                <span class="oneTwo"><input name="maSach" id="param_name" _autocheck="true" type="text" th:field="${count.maSach}" readonly/></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tên -->
+          <div class="formRow">
+            <div class="formValidate">
+              <label class="formLeft" for="param_name">Số Lượng <span class="req">*</span></label>
+              <div class="formRight">
+                <span class="oneTwo"><input name="name"  _autocheck="true" type="text" th:field="${count.soLuong}" /></span>
+              </div>
+            </div>
+            <div style="color: red; margin-left: 16px;" name="name_autocheck" class="autocheck check_soluong"></div>
+          </div>
+
+
+        </div><!-- End tab_container-->
+
+        <div class="formSubmit">
+          <button type="submit"class="submit_btn">Thêm</button>
+          <input type="reset" value="Hủy bỏ" class="reset_btn" />
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<script>
+  document.getElementById("form").addEventListener("submit", function(event) {
+    var array = document.getElementsByTagName('input');
+    var numberRegex = /^\d+$/;
+    if (array[1].value == "") {
+      document.querySelector('.check_soluong').innerHTML = "Số lượng không được để trống!";
+      event.preventDefault();
+    } else if(!numberRegex.test(array[1].value)) {
+      document.querySelector('.check_soluong').innerHTML = "Vui lòng chỉ nhập số!";
+      event.preventDefault();
+    } else {
+      document.querySelector('.check_soluong').innerHTML = "";
+    }
+  });
+</script>
