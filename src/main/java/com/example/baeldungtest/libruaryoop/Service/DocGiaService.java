@@ -1,8 +1,7 @@
-package com.example.libruaryoop.Service;
+package com.example.baeldungtest.libruaryoop.Service;
 
-import com.example.libruaryoop.Model.DocGia;
-import com.example.libruaryoop.Repository.DocGiaRepo;
-
+import com.example.baeldungtest.libruaryoop.Model.DocGia;
+import com.example.baeldungtest.libruaryoop.Repository.DocGiaRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,10 +51,10 @@ public class DocGiaService {
     public DocGia updateDocGia(DocGia docGia){
         DocGia existing = docGiaRepo.findById(docGia.getMaDocGia()).orElse(null);
         if(existing!=null){
-            existing.setTenDocGia(docGia.getTenDocGia());
-            existing.setSoDienThoai(docGia.getSoDienThoai());
-            existing.setCCCD(docGia.getCCCD());
-            existing.setEmail(docGia.getEmail());
+            existing.setTenDocGia(docGia.getTenDocGia().trim());
+            existing.setSoDienThoai(docGia.getSoDienThoai().trim());
+            existing.setCCCD(docGia.getCCCD().trim());
+            existing.setEmail(docGia.getEmail().trim());
             existing.setCheckDocGia(true);
             return docGiaRepo.save(existing);
         }

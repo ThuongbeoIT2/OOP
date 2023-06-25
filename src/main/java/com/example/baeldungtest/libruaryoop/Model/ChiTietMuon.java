@@ -1,9 +1,11 @@
-package com.example.libruaryoop.Model;
+package com.example.baeldungtest.libruaryoop.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import jakarta.persistence.*;
+
 import lombok.Data;
+
+import javax.persistence.*;
 
 //To suppress serializing properties with null values
 @JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)

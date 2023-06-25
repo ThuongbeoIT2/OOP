@@ -1,9 +1,11 @@
-package com.gpch.login.configuration;
+package com.example.baeldungtest.login.configuration;
 
-import com.gpch.login.service.MyUserDetailsService;
+
+import com.example.baeldungtest.login.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -13,6 +15,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -41,7 +44,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers(loginPage).permitAll()
                 .antMatchers("/registration").permitAll()
-                .antMatchers("/admin/**").hasAuthority("ADMIN")
+//                .antMatchers("/user/**").hasAuthority("USER")
+                .antMatchers("/admin/registration").hasAuthority("ADMIN")
+//                .antMatchers("/admin/**").hasAuthority("USER")
                 .anyRequest()
                 .authenticated()
                 .and().csrf().disable()
@@ -49,12 +54,20 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .loginPage(loginPage)
                 .loginPage("/")
                 .failureUrl("/login?error=true")
-                .defaultSuccessUrl("/admin/home")
-                .usernameParameter("user_name")
+                .defaultSuccessUrl("/home")
+                .usernameParameter("email")
                 .passwordParameter("password")
-                .and().logout()
+                .and()
+                .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher(logoutPage))
-                .logoutSuccessUrl(loginPage).and().exceptionHandling();
+                .logoutSuccessUrl(loginPage).and().exceptionHandling()
+                .and()
+                .sessionManagement() // Cấu hình quản lý phiên
+                .sessionFixation().migrateSession() // Đảm bảo phiên mới được tạo sau khi đăng nhập thành công
+                .maximumSessions(10000) // Chỉ cho phép một phiên hoạt động tại một thời điểm
+                .expiredUrl(loginPage) // Đường dẫn chuyển hướng khi phiên hết hạn
+                .and()
+                .invalidSessionUrl(loginPage); // Đường dẫn chuyển hướng khi phiên không hợp lệ
     }
 
     @Override

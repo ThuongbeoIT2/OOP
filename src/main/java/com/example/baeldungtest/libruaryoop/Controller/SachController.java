@@ -1,11 +1,8 @@
-package com.example.libruaryoop.Controller;
+package com.example.baeldungtest.libruaryoop.Controller;
 
-
-import com.example.libruaryoop.Model.Count;
-import com.example.libruaryoop.Model.Sach;
-
-import com.example.libruaryoop.Service.SachService;
-import jakarta.servlet.http.HttpSession;
+import com.example.baeldungtest.libruaryoop.Model.Count;
+import com.example.baeldungtest.libruaryoop.Model.Sach;
+import com.example.baeldungtest.libruaryoop.Service.SachService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,46 +11,38 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class SachController {
     @Autowired
     private SachService sachService;
     @GetMapping("/list-sach")
-    public String index(Model model, HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login";
-        }
-        System.out.println(username);
+    public String index(Model model) {
+
         model.addAttribute("listTrue", sachService.findAllCheckTrue());
         return "admin/sach/list_sach";
     }
     @GetMapping("/luutru-sach")
     public String Luutru(Model model,HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login";
-        }
-        System.out.println(username);
+
+
         model.addAttribute("listFalse", sachService.findAllCheckFalse());
         return "admin/sach/luutru_sach";
     }
     @GetMapping("/add-sach")
-    public String addSach(Model model,HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login";
-        }
-        System.out.println(username);
+    public String addSach(Model model) {
+
+
         model.addAttribute("sach", new Sach());
 
         return "admin/sach/add_sach";
     }
     @PostMapping("/add-sach")
     public String addSach(@ModelAttribute("sach") Sach sach) {
-        sach.setTenSach(sach.getTenSach());
-        sach.setTacGia(sach.getTacGia());
-        sach.setNXB(sach.getNXB());
+        sach.setTenSach(sach.getTenSach().trim());
+        sach.setTacGia(sach.getTacGia().trim());
+        sach.setNXB(sach.getNXB().trim());
         sach.setDaMuon(sach.getDaMuon());
         sach.setSoLuongCon(sach.getSoLuongCon());
         sach.setCheckSach(true);
@@ -65,11 +54,8 @@ public class SachController {
 //
 
     @GetMapping("/edit-sach/{maSach}")
-    public String editSach(Model model, @PathVariable Long maSach,HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login";
-        }
+    public String editSach(Model model, @PathVariable Long maSach) {
+
         Sach sach = sachService.findSachById(maSach);
         model.addAttribute("sach", sach);
         return "admin/sach/edit_sach";
@@ -82,40 +68,28 @@ public class SachController {
     }
 
     @GetMapping("/delete-sach/{maSach}")
-    public String deleteById(@PathVariable("maSach") Long maSach,HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login";
-        }
+    public String deleteById(@PathVariable("maSach") Long maSach) {
+
         sachService.deleteById(maSach);
         return "redirect:/list-sach";
     }
     @GetMapping("/change-sach/{maSach}")
-    public String changeById(@PathVariable("maSach") Long maSach,HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login";
-        }
+    public String changeById(@PathVariable("maSach") Long maSach) {
+
         sachService.changeById(maSach);
         return "redirect:/list-sach";
     }
 
     @GetMapping("/thongke-sach")
-    public String THONGKE(Model model, HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login";
-        }
-        System.out.println(username);
-        model.addAttribute("listTk", sachService.findSachBySoLuong(5L));
+    public String THONGKE(Model model) {
+
+
+        model.addAttribute("listTk", sachService.findSachBySoLuong(5));
         return "admin/thongke/thongke_sach";
     }
     @GetMapping("/add-sach/{maSach}")
-    public String NhapThem(@PathVariable("maSach") Long maSach, Model model,HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login";
-        }
+    public String NhapThem(@PathVariable("maSach") Long maSach, Model model) {
+
         Count count=new Count();
         count.setMaSach(maSach);
         model.addAttribute("count", count);
@@ -132,9 +106,9 @@ public class SachController {
     }
     @PostMapping("/add-sach/{maSach}")
     public String NhapThem(@ModelAttribute("sach") Sach sach) {
-        sach.setTenSach(sach.getTenSach());
-        sach.setTacGia(sach.getTacGia());
-        sach.setNXB(sach.getNXB());
+        sach.setTenSach(sach.getTenSach().trim());
+        sach.setTacGia(sach.getTacGia().trim());
+        sach.setNXB(sach.getNXB().trim());
         sach.setDaMuon(sach.getDaMuon());
         sach.setSoLuongCon(sach.getSoLuongCon());
         sach.setCheckSach(true);
@@ -143,12 +117,8 @@ public class SachController {
         return "redirect:/list-sach";
     }
     @GetMapping("/thongke")
-    public String MuonNhieu(Model model, HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login";
-        }
-        System.out.println(username);
+    public String MuonNhieu(Model model) {
+
         model.addAttribute("listmuonnhieu", sachService.findByDaMuon());
         return "admin/thongke/muonnhieu_sach";
     }}

@@ -91,7 +91,7 @@
 
     <div class="sideProfile">
       <a href="#" title="" class="profileFace"><img width="40" th:src="@{../admin/images/user.png}" /></a>
-      <span>Xin chào: <strong>admin!</strong></span>
+      <span th:utext="${userName}"></span>
       <div class="clear"></div>
     </div>
     <div class="sidebarSep"></div>
@@ -154,29 +154,6 @@
           <li >
             <a th:href="@{luutru-sach}">
               Kho							</a>
-          </li>
-        </ul>
-
-      </li>
-      <li class="account">
-
-        <a class=" exp" >
-          <span>Tài khoản</span>
-          <strong>3</strong>
-        </a>
-
-        <ul class="sub">
-          <li >
-            <a th:href="@{list-nhansu}">
-              Ban quản trị - nhân viên trực							</a>
-          </li>
-          <li >
-            <a th:href="@{add-nhansu}">
-              Thêm nhân viên						</a>
-          </li>
-          <li >
-            <a th:href="@{luutru-nhansu}">
-              Danh sách nhân viên					</a>
           </li>
         </ul>
 
@@ -267,7 +244,7 @@
           </a></li>
 
           <!-- Logout -->
-          <li><a th:href="@{/log-out}">
+          <li><a th:href="@{/logout}">
             <img th:src="@{../admin/images/icons/topnav/logout.png}" alt="" />
             <span>Đăng xuất</span>
           </a></li>
@@ -311,7 +288,7 @@
               <td th:text="${sach.daMuon}">
               <td th:text="${sach.NXB}">
               <td><a th:href="@{'/edit-sach/'+ ${sach.maSach}}" >Chỉnh sửa</a></td>
-              <td><a class="btn btn-sm btn-white" th:href="@{'/delete-sach/'+ ${sach.maSach}}"
+              <td><a class="btn btn-sm btn-white" th:href="@{'/change-sach/'+ ${sach.maSach}}"
                      onclick="return confirm('Bạn có chắc không?')">
                 Xuất ra
               </a>

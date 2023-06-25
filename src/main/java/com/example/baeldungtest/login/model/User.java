@@ -1,9 +1,8 @@
-package com.gpch.login.model;
+package com.example.baeldungtest.login.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -14,20 +13,16 @@ import java.util.Set;
 @Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
-@Entity
+@Entity(name = "users")
 @Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
-    private Integer id;
-    @Column(name = "user_name")
-    @Length(min = 5, message = "*Your user name must have at least 5 characters")
-    @NotEmpty(message = "*Please provide a user name")
-    private String userName;
+    private Integer userID;
     @Column(name = "email")
+    @Length(min = 5, message = "*Your user name must have at least 5 characters")
     @Email(message = "*Please provide a valid Email")
     @NotEmpty(message = "*Please provide an email")
     private String email;
@@ -35,14 +30,19 @@ public class User {
     @Length(min = 5, message = "*Your password must have at least 5 characters")
     @NotEmpty(message = "*Please provide your password")
     private String password;
-    @Column(name = "name")
-    @NotEmpty(message = "*Please provide your name")
-    private String name;
+    @Column(name = "first_name")
+    @NotEmpty(message = "*Please provide your first name")
+    private String firstname;
     @Column(name = "last_name")
     @NotEmpty(message = "*Please provide your last name")
-    private String lastName;
-    @Column(name = "active")
-    private Boolean active;
+    private String lastname;
+    @Column(name = "enabled")
+    private boolean enabled;
+
+    public User() {
+        super();
+        this.enabled=false;
+    }
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;

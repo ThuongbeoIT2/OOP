@@ -124,14 +124,17 @@
   document.getElementById("form").addEventListener("submit", function(event) {
     var array = document.getElementsByTagName('input');
     var numberRegex = /^\d+$/;
-    if (array[1].value == "") {
+    var countValue = parseInt(array[1].value); // Parse the value as an integer
+
+    if (array[1].value === "") {
       document.querySelector('.check_soluong').innerHTML = "Số lượng không được để trống!";
       event.preventDefault();
-    } else if(!numberRegex.test(array[1].value)) {
-      document.querySelector('.check_soluong').innerHTML = "Vui lòng chỉ nhập số!";
+    } else if (!numberRegex.test(array[1].value) || countValue < 0) {
+      document.querySelector('.check_soluong').innerHTML = "Vui lòng nhập không âm!";
       event.preventDefault();
     } else {
       document.querySelector('.check_soluong').innerHTML = "";
     }
   });
+
 </script>

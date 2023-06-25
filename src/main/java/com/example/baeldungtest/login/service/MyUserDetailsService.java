@@ -1,7 +1,7 @@
-package com.gpch.login.service;
+package com.example.baeldungtest.login.service;
 
-import com.gpch.login.model.Role;
-import com.gpch.login.model.User;
+import com.example.baeldungtest.login.model.Role;
+import com.example.baeldungtest.login.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,13 +18,19 @@ import java.util.Set;
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    public MyUserDetailsService(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String userName) {
-        User user = userService.findUserByUserName(userName);
+    public UserDetails loadUserByUsername(String email) {
+        User user = userService.findUserByEmail(email).orElseThrow(() ->
+                new RuntimeException("User not found: " + email));
+
         List<GrantedAuthority> authorities = getUserAuthority(user.getRoles());
         return buildUserForAuthentication(user, authorities);
     }
@@ -38,7 +44,8 @@ public class MyUserDetailsService implements UserDetailsService {
     }
 
     private UserDetails buildUserForAuthentication(User user, List<GrantedAuthority> authorities) {
-        return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(),
-                user.getActive(), true, true, true, authorities);
+        return new org.springframework.security.core.userdetails.User(
+                user.getEmail(), user.getPassword(),
+                user.isEnabled(), true, true, true, authorities);
     }
 }

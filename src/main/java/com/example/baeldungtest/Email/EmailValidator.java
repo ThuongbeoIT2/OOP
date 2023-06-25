@@ -1,4 +1,5 @@
-package com.example.baeldung.Email;
+package com.example.baeldungtest.Email;
+
 
 
 import javax.validation.ConstraintValidator;

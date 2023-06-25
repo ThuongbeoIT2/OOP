@@ -1,15 +1,21 @@
-package com.example.libruaryoop.Controller;
+package com.example.baeldungtest.libruaryoop.Controller;
 
-
-import com.example.libruaryoop.Model.*;
-import com.example.libruaryoop.Service.*;
-
-import jakarta.servlet.http.HttpSession;
+import com.example.baeldungtest.libruaryoop.Model.ChiTietMuon;
+import com.example.baeldungtest.libruaryoop.Model.ChiTietMuonDto;
+import com.example.baeldungtest.libruaryoop.Model.PhieuMuon;
+import com.example.baeldungtest.libruaryoop.Model.Sach;
+import com.example.baeldungtest.libruaryoop.Service.ChiTietMuonService;
+import com.example.baeldungtest.libruaryoop.Service.PhieuMuonService;
+import com.example.baeldungtest.libruaryoop.Service.SachService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 @Controller
 public class PhieuMuonController {
@@ -19,48 +25,32 @@ public class PhieuMuonController {
     private ChiTietMuonService chiTietMuonService;
     @Autowired
     private SachService sachService;
-    @Autowired
-    private NhanSuService nhanSuService;
-    @Autowired
-    private TheTVService theTVService;
+
     @GetMapping("/list-phieumuon")
     public String index(Model model, HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login";
-        }
-        System.out.println(username);
+
+
         model.addAttribute("listTrue", phieuMuonService.findAllCheckTrue());
         model.addAttribute("listFalse", phieuMuonService.findAllCheckFalse());
         return "admin/phieumuon/list_phieumuon";
     }
     @GetMapping("/queue-phieumuon")
     public String HangDoi(Model model, HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login";
-        }
-        System.out.println(username);
+
+
         model.addAttribute("listFalse", phieuMuonService.findAllCheckFalse());
         return "admin/phieumuon/hangdoi_phieumuon";
     }
     @GetMapping("/list-luutru")
     public String Store(Model model,HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login";
-        }
+
         model.addAttribute("listluutru", phieuMuonService.findAllCheckLuutru());
         return "admin/phieumuon/list_luutru";
     }
     @GetMapping("/add-phieumuon")
     public String addPhieuMuon(Model model,HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login";
-        }
+
         model.addAttribute("phieuMuon", new PhieuMuon());
-        model.addAttribute("list_user",nhanSuService.findAllCheckTrue() );
         return "admin/phieumuon/add_phieumuon";
     }
     @PostMapping("/add-phieumuon")
@@ -79,10 +69,7 @@ public class PhieuMuonController {
 
     @GetMapping("/edit-phieumuon/{maPhieuMuon}")
     public String editPhieuMoi(Model model, @PathVariable Long maPhieuMuon,HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login";
-        }
+
         PhieuMuon phieuMuon = phieuMuonService.findPhieuMuonById(maPhieuMuon);
 
         model.addAttribute("phieuMuon", phieuMuon);
@@ -98,29 +85,20 @@ public class PhieuMuonController {
 
     @GetMapping("/delete-phieumuon/{maPhieuMuon}")
     public String deleteById(@PathVariable("maPhieuMuon") Long maPhieuMuon,HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login";
-        }
+
         phieuMuonService.deleteById(maPhieuMuon);
         return "redirect:/list-phieumuon";
     }
     @GetMapping("/change-phieumuon/{maPhieuMuon}")
     public String changeById(@PathVariable("maPhieuMuon") Long maPhieuMuon,HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login";
-        }
+
         phieuMuonService.changeById(maPhieuMuon);
         return "redirect:/list-phieumuon";
     }
     ///////////////////
     @GetMapping("/list-chitietmuon/{maPhieuMuon}")
     public String ChiTietPhieu(Model model,@PathVariable("maPhieuMuon") Long maPhieuMuon,HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login";
-        }
+
         model.addAttribute("list", chiTietMuonService.findAllPhieuMuon(maPhieuMuon));
 
         return "admin/phieumuon/list_chitiet";
@@ -129,10 +107,7 @@ public class PhieuMuonController {
     //////
     @GetMapping("/add-chitietphieu/{maPhieuMuon}")
     public String addImport(Model model, @PathVariable Long maPhieuMuon,HttpSession session){
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login";
-        }
+
         PhieuMuon phieuMuondto = phieuMuonService.findPhieuMuonById(maPhieuMuon);
         model.addAttribute("pmdto", phieuMuondto);
         model.addAttribute("phieumuon",phieuMuonService.findAllCheckFalse());
@@ -179,10 +154,7 @@ public class PhieuMuonController {
     }
     @GetMapping("/delete-chitietphieu/{maPhieuMuon}")
     public String deleteById(Model model,@PathVariable("maPhieuMuon") Long maPhieuMuon,HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login";
-        }
+
         List<ChiTietMuon> chiTietMuonList = chiTietMuonService.findAllPhieuMuon(maPhieuMuon);
         chiTietMuonList.forEach(p->{
             Sach sach = sachService.findSachById(p.getSach().getMaSach());

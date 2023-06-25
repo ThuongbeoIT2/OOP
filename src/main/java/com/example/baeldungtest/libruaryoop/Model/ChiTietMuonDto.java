@@ -1,4 +1,4 @@
-package com.example.libruaryoop.Model;
+package com.example.baeldungtest.libruaryoop.Model;
 
 import lombok.Data;
 import org.springframework.stereotype.Component;

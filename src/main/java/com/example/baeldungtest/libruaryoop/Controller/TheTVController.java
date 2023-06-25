@@ -1,14 +1,15 @@
-package com.example.libruaryoop.Controller;
+package com.example.baeldungtest.libruaryoop.Controller;
 
-import com.example.libruaryoop.Model.DocGia;
-import com.example.libruaryoop.Model.TheTV;
-import com.example.libruaryoop.Service.DocGiaService;
-import com.example.libruaryoop.Service.TheTVService;
-import jakarta.servlet.http.HttpSession;
+import com.example.baeldungtest.libruaryoop.Model.DocGia;
+import com.example.baeldungtest.libruaryoop.Model.TheTV;
+import com.example.baeldungtest.libruaryoop.Service.DocGiaService;
+import com.example.baeldungtest.libruaryoop.Service.TheTVService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class TheTVController {
@@ -18,32 +19,23 @@ public class TheTVController {
     private DocGiaService docGiaService;
     @GetMapping("/list-thetv")
     public String index(Model model, HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login";
-        }
-        System.out.println(username);
+
+
         model.addAttribute("listTrue", theTVService.findAllCheckTrue());
         return "admin/thetv/list_thetv";
     }
     @GetMapping("/luutru-thetv")
     public String Luutru(Model model,HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login";
-        }
-        System.out.println(username);
+
+
         model.addAttribute("listFalse", theTVService.findAllCheckFalse());
         return "admin/thetv/luutru-thetv";
     }
 
     @GetMapping("/add-thetv")
     public String addTTV(Model model,HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login";
-        }
-        System.out.println(username);
+
+
         model.addAttribute("listDocGia",docGiaService.findAllCheckFalse());
         model.addAttribute("thetv", new TheTV());
 
@@ -66,10 +58,7 @@ public class TheTVController {
 
     @GetMapping("/edit-thetv/{soThe}")
     public String editTTV(Model model, @PathVariable Long soThe,HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login";
-        }
+
         TheTV theTV = theTVService.findTTVById(soThe);
         System.out.println(soThe);
         model.addAttribute("thetv", theTV);
@@ -85,19 +74,12 @@ public class TheTVController {
 
     @GetMapping("/delete-thetv/{soThe}")
     public String deleteById(@PathVariable("soThe") Long soThe,HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login";
-        }
+
         theTVService.deleteById(soThe);
         return "redirect:/list-thetv";
     }
     @GetMapping("/change-thetv/{soThe}")
     public String changeById(@PathVariable("soThe") Long soThe,HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "redirect:/login";
-        }
         theTVService.changeById(soThe);
         return "redirect:/list-thetv";
     }

@@ -1,9 +1,9 @@
-package com.example.libruaryoop.Service;
+package com.example.baeldungtest.libruaryoop.Service;
 
 
 
-import com.example.libruaryoop.Model.PhieuMuon;
-import com.example.libruaryoop.Repository.PhieuMuonRepo;
+import com.example.baeldungtest.libruaryoop.Model.PhieuMuon;
+import com.example.baeldungtest.libruaryoop.Repository.PhieuMuonRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,6 @@
-package com.example.libruaryoop.Service;
-
-import com.example.libruaryoop.Model.Sach;
-import com.example.libruaryoop.Repository.SachRepo;
+package com.example.baeldungtest.libruaryoop.Service;
+import com.example.baeldungtest.libruaryoop.Model.Sach;
+import com.example.baeldungtest.libruaryoop.Repository.SachRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,19 +45,19 @@ public class SachService {
     }
 
     public void addSach(Sach sach) {
-        sach.setCheckSach(false);
+        sach.setCheckSach(true);
         sachRepo.save(sach);
     }
 
     public Sach updateSach(Sach sach){
         Sach existing = sachRepo.findById(sach.getMaSach()).orElse(null);
         if(existing!=null){
-            existing.setTenSach(sach.getTenSach());
-            existing.setTacGia(sach.getTacGia());
+            existing.setTenSach(sach.getTenSach().trim());
+            existing.setTacGia(sach.getTacGia().trim());
             existing.setDaMuon(sach.getDaMuon());
             existing.setSoLuongCon(sach.getSoLuongCon());
             existing.setCheckSach(true);
-            existing.setNXB(sach.getNXB());
+            existing.setNXB(sach.getNXB().trim());
             existing.setNamXB(sach.getNamXB());
             return sachRepo.save(existing);
         }
@@ -76,7 +75,7 @@ public class SachService {
     public List<Sach> findByDaMuon(){
         return sachRepo.findByDaMuon();
     }
-    public List<Sach> findSachBySoLuong(Long soLuong) {
+    public List<Sach> findSachBySoLuong(int soLuong) {
         return  sachRepo.findSachBySoLuong(soLuong);
     }
 }

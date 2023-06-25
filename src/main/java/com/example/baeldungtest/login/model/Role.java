@@ -1,4 +1,4 @@
-package com.gpch.login.model;
+package com.example.baeldungtest.login.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "roles")
 @Table(name = "roles")
 public class Role {
     @Id
@@ -20,4 +20,6 @@ public class Role {
     private int id;
     @Column(name = "role")
     private String role;
+
+
 }

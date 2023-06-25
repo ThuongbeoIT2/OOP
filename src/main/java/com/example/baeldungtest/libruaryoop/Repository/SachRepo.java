@@ -1,8 +1,7 @@
-package com.example.libruaryoop.Repository;
+package com.example.baeldungtest.libruaryoop.Repository;
 
 
-import com.example.libruaryoop.Model.Sach;
-
+import com.example.baeldungtest.libruaryoop.Model.Sach;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -34,5 +33,5 @@ public interface SachRepo extends JpaRepository<Sach,Long> {
     @Query("select u.soLuongCon from sach  u where u.maSach=:maSach ")
     Sach findsoLuongById(Long maSach);
     @Query("select u from sach  u where u.soLuongCon<=:soLuong ")
-    List<Sach> findSachBySoLuong(Long soLuong);
+    List<Sach> findSachBySoLuong(int soLuong);
 }

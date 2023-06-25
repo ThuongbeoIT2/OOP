@@ -1,7 +1,6 @@
-package com.example.libruaryoop.Repository;
+package com.example.baeldungtest.libruaryoop.Repository;
 
-
-import com.example.libruaryoop.Model.PhieuMuon;
+import com.example.baeldungtest.libruaryoop.Model.PhieuMuon;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

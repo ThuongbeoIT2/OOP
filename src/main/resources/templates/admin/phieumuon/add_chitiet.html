@@ -129,6 +129,20 @@
         .btn:hover {
             opacity: 0.7;
         }
+
+         .row-sm .formRow {
+             display: flex;
+             align-items: center;
+         }
+
+        .row-sm .formRow label {
+            flex-basis: 150px;
+        }
+
+        .row-sm .formRow .formRight {
+            flex-grow: 1;
+        }
+
     </style>
 </head>
 
@@ -140,11 +154,11 @@
 
         <!-- Account panel -->
 
-        <div class="sideProfile">
-            <a href="#" title="" class="profileFace"><img width="40" th:src="@{../admin/images/user.png}" /></a>
-            <span>Xin chào: <strong>admin!</strong></span>
-            <div class="clear"></div>
-        </div>
+        <<div class="sideProfile">
+        <a href="#" title="" class="profileFace"><img width="40" th:src="@{../admin/images/user.png}" /></a>
+        <span th:utext="${userName}"></span>
+        <div class="clear"></div>
+    </div>
         <div class="sidebarSep"></div>
         <!-- Left navigation -->
 
@@ -209,29 +223,23 @@
                 </ul>
 
             </li>
-            <li class="account">
+<!--            <li class="account">-->
 
-                <a class=" exp" >
-                    <span>Tài khoản</span>
-                    <strong>3</strong>
-                </a>
+<!--                <a class=" exp" >-->
+<!--                    <span>Tài khoản</span>-->
+<!--                    <strong>1</strong>-->
+<!--                </a>-->
 
-                <ul class="sub">
-                    <li >
-                        <a th:href="@{/list-nhansu}">
-                            Ban quản trị - nhân viên trực							</a>
-                    </li>
-                    <li >
-                        <a th:href="@{/add-nhansu}">
-                            Thêm nhân viên						</a>
-                    </li>
-                    <li >
-                        <a th:href="@{/luutru-nhansu}">
-                            Danh sách nhân viên					</a>
-                    </li>
-                </ul>
+<!--                <ul class="sub">-->
 
-            </li>
+<!--                    <li >-->
+<!--                        <a th:href="@{/registration}">-->
+<!--                            Thêm tài khoản						</a>-->
+<!--                    </li>-->
+
+<!--                </ul>-->
+
+<!--            </li>-->
             <li class="support">
 
                 <a class=" exp" >
@@ -342,54 +350,40 @@
                     <div class="title">
                         <span>Nhập dữ liệu cho phiếu mượn</span>
                     </div>
-                    <!--                        <div class="col-lg">-->
-                    <!--                            <label>mã phiếu</label>-->
-                    <!--                            <input class="form-control" style="border-radius: 10px" th:field="${pmdto.maPhieuMuon}" th:value="${pmdto.maPhieuMuon}" placeholder="name" type="text" required>-->
-                    <!--                        </div>&lt;!&ndash; col &ndash;&gt;-->
                     <div class="formRow">
-                        <label class="formLeft" >Mã Phiếu Mượn </label>
+                        <label class="formLeft">Mã Phiếu Mượn</label>
                         <div class="formRight">
-                            <span class="oneTwo"><input name="name"  _autocheck="true" type="text" th:field="${pmdto.maPhieuMuon}" readonly /></span>
+                            <span class="oneTwo"><input name="name" _autocheck="true" type="text" th:field="${pmdto.maPhieuMuon}" readonly /></span>
                             <span name="name_autocheck" class="autocheck"></span>
                             <div name="name_error" class="clear error"></div>
                         </div>
                         <div class="clear"></div>
                     </div>
                     <span style="margin: 20px 0; font-size: 20px;display: flex;justify-content: center;">Chi tiết sản phẩm nhập</span>
-
                     <th:block th:object="${chitietList}">
                         <th:block th:each="p, st : *{chiTietMuonList}">
                             <div class="row row-sm">
                                 <div class="col-sm" style="display: flex; justify-content: center;align-items: center">
-<!--                                    <label style="width: 118px;">Tên hàng</label>-->
-<!--                                    <input class="form-control" style="border-radius:7px"-->
-<!--                                           th:field="*{chiTietMuonList[__${st.index}__].sach.maSach}"-->
-<!--                                           placeholder=""-->
-<!--                                           type="text" required-->
-<!--                                    />-->
-
                                     <div class="formRow">
                                         <div class="formValidate">
-                                            <label class="formLeft" >Mã Sách :<span class="req">*</span></label>
+                                            <label class="formLeft">Tên sách:<span class="req">*</span></label>
                                             <div class="formRight">
                                                 <select class="form-control select2" th:field="*{chiTietMuonList[__${st.index}__].sach.maSach}">
-                                                    <option label="Chọn mã Sách" value=""></option>
-                                                    <th:block th:each="u : ${sach}">
-                                                        <option th:value="${u.maSach}" th:utext="${u.maSach}"></option>
+                                                    <option label="Chọn sách" value=""></option>
+                                                    <th:block th:each="book : ${sach}">
+                                                        <option th:value="${book.maSach}" th:text="${book.tenSach}"></option>
                                                     </th:block>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div style="color: red;" name="name_autocheck" class="autocheck check_docgia"/>
+                                        <div style="color: red;" name="name_autocheck" class="autocheck check_docgia"></div>
                                     </div>
                                 </div>
                                 <div class="col-sm" style="display: flex; justify-content: center;align-items: center">
                                     <label style="width: 118px;">Số lượng</label>
-                                    <input class="form-control" style="border-radius: 7px"
-                                           th:field="*{chiTietMuonList[__${st.index}__].soLuongMuon}"
-                                           placeholder=""
-                                           type="text" required
-                                    />
+                                    <select class="form-control" style="border-radius: 7px" th:field="*{chiTietMuonList[__${st.index}__].soLuongMuon}">
+                                        <option th:each="i : ${#numbers.sequence(1, 5)}" th:value="${i}" th:text="${i}"></option>
+                                    </select>
                                 </div>
                             </div>
                         </th:block>
@@ -400,12 +394,9 @@
                 </div>
             </form>
 
+
         </div>
     </div>
-    <div class="view-search"  style="width: 1000px; height: 300px; overflow: hidden">
-        <iframe th:src="@{/list-search}" width="1000px" height="300px" ></iframe>
-    </div>
-
 
 </div>
 

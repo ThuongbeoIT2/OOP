@@ -122,7 +122,7 @@
 
     <div class="sideProfile">
       <a href="#" title="" class="profileFace"><img width="40" th:src="@{../admin/images/user.png}" /></a>
-      <span>Xin chào: <strong>admin!</strong></span>
+      <span th:utext="${userName}"></span>
       <div class="clear"></div>
     </div>
     <div class="sidebarSep"></div>
@@ -189,29 +189,23 @@
         </ul>
 
       </li>
-      <li class="account">
+<!--      <li class="account">-->
 
-        <a class=" exp" >
-          <span>Tài khoản</span>
-          <strong>3</strong>
-        </a>
+<!--        <a class=" exp" >-->
+<!--          <span>Tài khoản</span>-->
+<!--          <strong>1</strong>-->
+<!--        </a>-->
 
-        <ul class="sub">
-          <li >
-            <a th:href="@{/list-nhansu}">
-              Ban quản trị - nhân viên trực							</a>
-          </li>
-          <li >
-            <a th:href="@{/add-nhansu}">
-              Thêm nhân viên						</a>
-          </li>
-          <li >
-            <a th:href="@{/luutru-nhansu}">
-              Danh sách nhân viên					</a>
-          </li>
-        </ul>
+<!--        <ul class="sub">-->
 
-      </li>
+<!--          <li >-->
+<!--            <a th:href="@{/registration}">-->
+<!--              Thêm tài khoản						</a>-->
+<!--          </li>-->
+
+<!--        </ul>-->
+
+<!--      </li>-->
       <li class="support">
 
         <a class=" exp" >
@@ -301,7 +295,7 @@
           </a></li>
 
           <!-- Logout -->
-          <li><a th:href="@{/log-out}">
+          <li><a th:href="@{/logout}">
             <img th:src="@{../admin/images/icons/topnav/logout.png}" alt="" />
             <span>Đăng xuất</span>
           </a></li>
@@ -320,75 +314,107 @@
       <div class="wrapper">
 
         <!-- Form -->
-        <form class="form" id="form" th:action="@{/update-sach}" th:object="${sach}" method="post" enctype="multipart/form-data">
-          <div class="widget form_container">
-            <div class="title">
-              <span>Chỉnh sửa thông tin nhập sách</span>
+        <<form class="form" id="form" th:action="@{/update-sach}" th:object="${sach}" method="post" enctype="multipart/form-data">
+        <div class="widget form_container">
+          <div class="title">
+            <span>Chỉnh sửa thông tin nhập sách</span>
+          </div>
+
+          <div class="tab_container">
+            <div id='tab1' class="tab_content pd0">
+              <!-- Tên Sách -->
+              <div class="formRow">
+                <div class="formValidate">
+                  <label class="formLeft" for="param_name">Tên Sách <span class="req">*</span></label>
+                  <div class="formRight">
+                <span class="oneTwo">
+                  <input name="name" id="tenSach" _autocheck="true" type="text" th:field="${sach.tenSach}" />
+                </span>
+                  </div>
+                </div>
+                <div style="color: red;" name="name_autocheck" class="autocheck check_name"></div>
+              </div>
+
+              <!-- Tác Giả -->
+              <div class="formRow">
+                <div class="formValidate">
+                  <label class="formLeft" for="param_name">Tác Giả <span class="req">*</span></label>
+                  <div class="formRight">
+                <span class="oneTwo">
+                  <input name="name" id="tacGia" _autocheck="true" type="text" th:field="${sach.tacGia}" />
+                </span>
+                  </div>
+                </div>
+                <div style="color: red;" name="name_autocheck" class="autocheck check_tacgia"></div>
+              </div>
+
+              <!-- Năm Xuất Bản -->
+              <div class="formRow">
+                <div class="formValidate">
+                  <label class="formLeft" for="param_name">Năm Xuất Bản <span class="req">*</span></label>
+                  <div class="formRight">
+                <span class="oneTwo">
+                  <input name="name" id="namXB" _autocheck="true" type="number" min="1000" max="9999" th:field="${sach.namXB}" />
+                </span>
+                  </div>
+                </div>
+                <div style="color: red;" name="name_autocheck" class="autocheck check_namxb"></div>
+              </div>
+
+              <!-- Số Lượng Còn -->
+              <div class="formRow">
+                <div class="formValidate">
+                  <label class="formLeft" for="param_name">Số Lượng Còn <span class="req">*</span></label>
+                  <div class="formRight">
+                <span class="oneTwo">
+                  <input name="name" id="soLuongCon" _autocheck="true" type="text" th:field="${sach.soLuongCon}" />
+                </span>
+                  </div>
+                </div>
+                <div style="color: red;" name="name_autocheck" class="autocheck check_soluong"></div>
+              </div>
+
+              <!-- Nhà Xuất Bản -->
+              <div class="formRow">
+                <div class="formValidate">
+                  <label class="formLeft" for="param_name">Nhà Xuất Bản <span class="req">*</span></label>
+                  <div class="formRight">
+                <span class="oneTwo">
+                  <input name="name" id="NXB" _autocheck="true" type="text" th:field="${sach.NXB}" />
+                </span>
+                  </div>
+                </div>
+                <div style="color: red;" name="name_autocheck" class="autocheck check_nhaxb"></div>
+              </div>
+
+              <!-- Ma Sách -->
+              <div class="col-lg">
+                <input class="form-control" style="border-radius: 10px" th:field="${sach.maSach}" th:value="${maDocGiax}" placeholder="" type="hidden" hidden>
+              </div>
             </div>
-
-            <div class="tab_container">
-              <div id='tab1' class="tab_content pd0">
-                <!-- Tên -->
-                <div class="formRow">
-                  <div class="formValidate">
-                    <label class="formLeft" for="param_name">Tên Sách <span class="req">*</span></label>
-                    <div class="formRight">
-                      <span class="oneTwo"><input name="name" id="param_name" _autocheck="true" type="text" th:field="${sach.tenSach}" /></span>
-                    </div>
-                  </div>
-                  <div style="color: red;" name="name_autocheck" class="autocheck check_name"></div>
-                </div>
-
-                <!-- Tên -->
-                <div class="formRow">
-                  <div class="formValidate">
-                    <label class="formLeft" for="param_name">Tác Giả <span class="req">*</span></label>
-                    <div class="formRight">
-                      <span class="oneTwo"><input name="name"  _autocheck="true" type="text" th:field="${sach.tacGia}" /></span>
-                    </div>
-                  </div>
-                  <div style="color: red;" name="name_autocheck" class="autocheck check_tacgia"></div>
-                </div>
-                <!-- Tên -->
-                <div class="formRow">
-                  <div class="formValidate">
-                    <label class="formLeft" for="param_name">Năm Xuất Bản <span class="req">*</span></label>
-                    <div class="formRight">
-                      <span class="oneTwo"><input name="name" _autocheck="true" type="text" th:field="${sach.namXB}" /></span>
-                    </div>
-                  </div>
-                  <div style="color: red;" name="name_autocheck" class="autocheck check_namxb"></div>
-                </div>
-                <!-- Tên -->
-                <div class="formRow">
-                  <div class="formValidate">
-                    <label class="formLeft" for="param_name">Số Lượng Còn <span class="req">*</span></label>
-                    <div class="formRight">
-                      <span class="oneTwo"><input name="name"  _autocheck="true" type="text" th:field="${sach.soLuongCon}" /></span>
-                    </div>
-                  </div>
-                  <div style="color: red;" name="name_autocheck" class="autocheck check_soluong"></div>
-                </div>
-                <div class="formRow">
-                  <div class="formValidate">
-                    <label class="formLeft" for="param_name">Nhà Xuất Bản <span class="req">*</span></label>
-                    <div class="formRight">
-                      <span class="oneTwo"><input name="name"  _autocheck="true" type="text" th:field="${sach.NXB}" /></span>
-                    </div>
-                  </div>
-                  <div style="color: red;" name="name_autocheck" class="autocheck check_nhaxb"></div>
-                </div>
-                <div class="col-lg">
-                  <input class="form-control" style="border-radius: 10px" th:field="${sach.maSach}" th:value="${maDocGiax}" placeholder="" type="hidden" hidden>
-                </div>
-              </div>
-              <div class="formSubmit">
-                <button type="submit" class="redB">Lưu</button>
-                <input type="reset" value="Hủy bỏ" class="basic" />
-              </div>
+            <div class="formSubmit">
+              <button type="submit" class="redB">Lưu</button>
+              <input type="reset" value="Hủy bỏ" class="basic" />
             </div>
           </div>
-        </form>
+        </div>
+      </form>
+
+        <script type="text/javascript">
+          // Kiểm tra giá trị nhập của trường "Năm Xuất Bản"
+          var namXBInput = document.getElementById('namXB');
+
+          namXBInput.addEventListener('input', function() {
+            var namXB = parseInt(namXBInput.value);
+            var currentYear = new Date().getFullYear();
+
+            if (namXB < 1900 || namXB > currentYear) {
+              namXBInput.setCustomValidity('Năm xuất bản phải nằm trong khoảng từ 1000 đến ' + currentYear);
+            } else {
+              namXBInput.setCustomValidity('');
+            }
+          });
+        </script>
       </div>
     </div>
   </div>
