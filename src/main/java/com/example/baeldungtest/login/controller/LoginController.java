@@ -20,14 +20,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -122,6 +120,20 @@ public class LoginController {
         }
 
     }
+    @GetMapping("/admin/listuser")
+    public  String getAllUser(Model model){
+        List<User> list= service.getAllUser();
+        list.forEach(p->{
+            System.out.println(p.getEmail());
+        });
+        model.addAttribute("listuser",list);
+        return "/admin/listuser";
+    }
+    @GetMapping("/admin/disable/{email}")
+    public String DisableAcccount(@PathVariable String email){
+        service.DisableAccount(email);
+        return "redirect:/admin/listuser";
+    }
 
 // Để sau
     @GetMapping("/registrationConfirm")
@@ -213,6 +225,8 @@ public class LoginController {
             return "redirect:/resetpassword";
         }
     }
+
+    // Vô hiệu hóa tài khoản = Cho nghỉ việc
 
     @GetMapping(value = "/home")
     public String home(Model model) {

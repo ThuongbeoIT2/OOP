@@ -33,8 +33,22 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public List<User> getAllUser() {
+        return userRepository.getAllUser();
+    }
+
+    @Override
     public Optional<User> findUserByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public void DisableAccount(String email) {
+        User userfound= userRepository.findByEmail(email.trim()).orElse(null);
+        if(userfound!= null){
+            userfound.setEnabled(false);
+            userRepository.save(userfound);
+        }
     }
 
     @Override

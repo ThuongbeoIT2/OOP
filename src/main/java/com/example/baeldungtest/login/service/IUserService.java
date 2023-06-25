@@ -6,10 +6,13 @@ import com.example.baeldungtest.login.dtos.UserDTO;
 import com.example.baeldungtest.login.model.User;
 import com.example.baeldungtest.login.model.VerificationToken;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface IUserService {
+    List<User> getAllUser();
     Optional<User> findUserByEmail(String email);
+    void DisableAccount(String email);
     User registerNewUserAccount(UserDTO userDto) throws UserAlreadyExistException;
     User getUser(String verificationToken);
     VerificationToken getVerificationToken(String verificationToken);
