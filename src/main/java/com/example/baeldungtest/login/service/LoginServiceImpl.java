@@ -5,7 +5,6 @@ import com.example.baeldungtest.login.model.VerificationToken;
 import com.example.baeldungtest.login.repository.UserRepository;
 import com.example.baeldungtest.login.repository.VerificationTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.SimpleMailMessage;
@@ -33,8 +32,7 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     ApplicationEventPublisher eventPublisher;
 
-    @Value("${app.baseUrl}")
-    private String baseUrl;
+
 
     @Override
     public SimpleMailMessage constructResendVerificationTokenEmail(String contextPath, java.util.Locale locale, VerificationToken newToken, User user) {

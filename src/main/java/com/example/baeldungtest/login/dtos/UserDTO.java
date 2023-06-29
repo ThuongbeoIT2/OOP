@@ -6,7 +6,6 @@ import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
 @Data
 @PasswordMatches
 public class UserDTO {
@@ -21,6 +20,9 @@ public class UserDTO {
     @NotNull
     @NotEmpty
     private String password;
+
+    @NotNull
+    @NotEmpty
     private String matchingPassword;
 
     @ValidEmail

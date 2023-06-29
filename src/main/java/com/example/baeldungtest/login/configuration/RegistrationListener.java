@@ -9,45 +9,40 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
-import java.security.Security;
 import java.util.UUID;
 
 @Component
-public class RegistrationListener implements ApplicationListener<OnRegistrationCompleteEvent> {
-
-    private final IUserService userService;
-    private final MessageSource messages;
-    private final JavaMailSender mailSender;
+public class RegistrationListener implements
+        ApplicationListener<OnRegistrationCompleteEvent> {
 
     @Autowired
-    public RegistrationListener(IUserService userService, MessageSource messages, JavaMailSender mailSender) {
-        this.userService = userService;
-        this.messages = messages;
+    private IUserService service;
+
+    @Autowired
+    private MessageSource messages;
+
+    @Autowired
+    private JavaMailSender mailSender;
+    @Autowired
+    public RegistrationListener(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
-
     @Override
     public void onApplicationEvent(OnRegistrationCompleteEvent event) {
-        confirmRegistration(event);
+        this.confirmRegistration(event);
     }
 
     private void confirmRegistration(OnRegistrationCompleteEvent event) {
         User user = event.getUser();
         String token = UUID.randomUUID().toString();
-        userService.createVerificationToken(user, token);
+        service.createVerificationToken(user, token);
 
         String recipientAddress = user.getEmail();
         String subject = "Xác nhận đăng ký tài khoản";
-        String confirmationUrl = event.getAppUrl() + "/regitrationConfirm.html?token=" + token;
+        String confirmationUrl
+                = event.getAppUrl() + "/regitrationConfirm.html?token=" + token;
         String message = "Nhấp vào liên kết sau để xác nhận đăng ký tài khoản:\n" + confirmationUrl;
 
-        // Configure TLS properties
-        Security.setProperty(
-
-                "jdk.tls.client.protocols", "TLSv1.2");
-        Security.setProperty(
-
-                "jdk.tls.disabledAlgorithms", "");
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(recipientAddress);
         email.setSubject(subject);

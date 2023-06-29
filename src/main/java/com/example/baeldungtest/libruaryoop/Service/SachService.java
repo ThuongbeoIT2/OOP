@@ -78,4 +78,7 @@ public class SachService {
     public List<Sach> findSachBySoLuong(int soLuong) {
         return  sachRepo.findSachBySoLuong(soLuong);
     }
+    public List<Sach> getSachMuon() {
+        return  sachRepo.getSachMuon();
+    }
 }

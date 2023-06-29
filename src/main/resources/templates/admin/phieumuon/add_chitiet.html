@@ -370,7 +370,7 @@
                                             <div class="formRight">
                                                 <select class="form-control select2" th:field="*{chiTietMuonList[__${st.index}__].sach.maSach}">
                                                     <option label="Chọn sách" value=""></option>
-                                                    <th:block th:each="book : ${sach}">
+                                                    <th:block th:each="book : ${sachmuon}">
                                                         <option th:value="${book.maSach}" th:text="${book.tenSach}"></option>
                                                     </th:block>
                                                 </select>

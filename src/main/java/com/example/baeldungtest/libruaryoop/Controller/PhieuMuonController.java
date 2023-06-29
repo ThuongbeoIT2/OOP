@@ -106,13 +106,13 @@ public class PhieuMuonController {
 
     //////
     @GetMapping("/add-chitietphieu/{maPhieuMuon}")
-    public String addImport(Model model, @PathVariable Long maPhieuMuon,HttpSession session){
+    public String addImport(Model model, @PathVariable Long maPhieuMuon){
 
         PhieuMuon phieuMuondto = phieuMuonService.findPhieuMuonById(maPhieuMuon);
         model.addAttribute("pmdto", phieuMuondto);
         model.addAttribute("phieumuon",phieuMuonService.findAllCheckFalse());
         model.addAttribute("chitiet", new ChiTietMuon());
-        model.addAttribute("sach", sachService.findAllCheckTrue());
+        model.addAttribute("sachmuon", sachService.getSachMuon());
 
 //        List<Product> products = new ArrayList<>();
         ChiTietMuonDto chiTietMuonDto = new ChiTietMuonDto();

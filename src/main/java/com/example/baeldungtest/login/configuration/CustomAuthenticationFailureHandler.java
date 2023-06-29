@@ -17,22 +17,22 @@ import java.util.Locale;
 @Component
 public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
-    private final MessageSource messages;
-    private final LocaleResolver localeResolver;
+    @Autowired
+    private MessageSource messages;
 
     @Autowired
-    public CustomAuthenticationFailureHandler(MessageSource messages, LocaleResolver localeResolver) {
-        this.messages = messages;
-        this.localeResolver = localeResolver;
-        setDefaultFailureUrl("/login.html?error=true");
-    }
+    private LocaleResolver localeResolver;
 
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
+    public void onAuthenticationFailure(HttpServletRequest request,
+                                        HttpServletResponse response, AuthenticationException exception)
             throws IOException, ServletException {
+        setDefaultFailureUrl("/login.html?error=true");
+
         super.onAuthenticationFailure(request, response, exception);
 
         Locale locale = localeResolver.resolveLocale(request);
+
         String errorMessage = messages.getMessage("message.badCredentials", null, locale);
 
         if (exception.getMessage().equalsIgnoreCase("User is disabled")) {

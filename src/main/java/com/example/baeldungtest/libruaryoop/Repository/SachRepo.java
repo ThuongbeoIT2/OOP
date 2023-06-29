@@ -34,4 +34,6 @@ public interface SachRepo extends JpaRepository<Sach,Long> {
     Sach findsoLuongById(Long maSach);
     @Query("select u from sach  u where u.soLuongCon<=:soLuong ")
     List<Sach> findSachBySoLuong(int soLuong);
+    @Query("select o from sach o where o.soLuongCon>5 order by o.maSach desc ")
+    List<Sach> getSachMuon();
 }
