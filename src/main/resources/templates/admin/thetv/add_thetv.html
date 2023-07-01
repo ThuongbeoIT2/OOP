@@ -391,6 +391,8 @@
   document.getElementById("form").addEventListener("submit", function(event) {
     var array = document.getElementsByTagName('input');
     var selectInput = document.getElementsByTagName('select');
+    const startDate = new Date(array[0].value);
+    const endDate = new Date(array[1].value);
     if (array[0].value == "") {
       document.querySelector('.check_startDate').innerHTML = "Ngày bắt đầu không được để trống!";
       event.preventDefault();
@@ -399,6 +401,9 @@
     }
     if (array[1].value == "") {
       document.querySelector('.check_endDate').innerHTML = "Ngày kết thúc không được để trống!";
+      event.preventDefault();
+    }  else if(endDate <= startDate) {
+      document.querySelector('.check_endDate').innerHTML = "Ngày kết thúc phải lớn hơn ngày bắt đầu";
       event.preventDefault();
     } else {
       document.querySelector('.check_endDate').innerHTML = "";

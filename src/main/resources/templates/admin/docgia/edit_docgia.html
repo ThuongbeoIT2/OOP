@@ -389,6 +389,7 @@
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     var numberRegex = /^\d+$/;
     var phoneRegex = /^\d{10}$/;
+    const phoneNumberRegex = /^(0)/;
     if (array[0].value == "") {
       document.querySelector('.check_name').innerHTML = "Tên không được để trống!";
       event.preventDefault();
@@ -402,7 +403,10 @@
       document.querySelector('.check_phone').innerHTML = "Số điện thoại không được để trống!";
       event.preventDefault();
     } else if(!numberRegex.test(array[1].value)) {
-      document.querySelector('.check_phone').innerHTML = "Vui lòng chỉ nhập số!";
+      document.querySelector('.check_phone').innerHTML = "Vui lòng chỉ nhập số nguyên dương";
+      event.preventDefault();
+    }   else if(!phoneNumberRegex.test(array[1].value)) {
+      document.querySelector('.check_phone').innerHTML = "Số điện thoại sai định dạng";
       event.preventDefault();
     } else if(!phoneRegex.test(array[1].value)) {
       document.querySelector('.check_phone').innerHTML = "Số điện thoại có 10 chữ số!";
@@ -421,6 +425,12 @@
     }
     if (array[3].value == "") {
       document.querySelector('.check_cccd').innerHTML = "CCCD không được để trống!";
+      event.preventDefault();
+    } else if (array[3].value < 0) {
+      document.querySelector('.check_cccd').innerHTML = "Vui lòng nhập không âm ";
+      event.preventDefault();
+    } else if(!numberRegex.test(array[3].value)) {
+      document.querySelector('.check_cccd').innerHTML = "Vui lòng chỉ nhập số nguyên dương";
       event.preventDefault();
     } else {
       document.querySelector('.check_cccd').innerHTML = "";

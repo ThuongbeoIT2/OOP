@@ -349,7 +349,7 @@
                     <label class="formLeft" for="param_name">Năm Xuất Bản <span class="req">*</span></label>
                     <div class="formRight">
         <span class="oneTwo">
-          <input name="name" _autocheck="true" type="number" min="1000" placeholder="Nhập năm xuất bản..." id="namXB" th:field="${sach.namXB}" />
+          <input name="name" _autocheck="true" type="text" placeholder="Nhập năm xuất bản..." id="namXB" th:field="${sach.namXB}" />
         </span>
                     </div>
                   </div>
@@ -360,7 +360,7 @@
                   <div class="formValidate">
                     <label class="formLeft" for="param_name">Số Lượng Nhập <span class="req">*</span></label>
                     <div class="formRight">
-                      <span class="oneTwo"><input name="name" _autocheck="true" type="number" min="1" placeholder="Nhập số lượng nhập..." th:field="${sach.soLuongCon}" /></span>
+                      <span class="oneTwo"><input name="name" _autocheck="true" type="text" placeholder="Nhập số lượng nhập..." th:field="${sach.soLuongCon}" /></span>
                     </div>
                   </div>
                   <div style="color: red;" name="name_autocheck" class="autocheck check_soluong"></div>
@@ -384,29 +384,29 @@
           </div>
         </form>
 
-        <script type="text/javascript">
-          // Kiểm tra nhập số không âm
-          var numberInputs = document.querySelectorAll('input[type="number"]');
-          numberInputs.forEach(function(input) {
-            input.addEventListener('input', function() {
-              if (parseFloat(input.value) < 0) {
-                input.value = 0;
-              }
-            });
-          });
-          var namXBInput = document.getElementById('namXB');
+<!--        <script type="text/javascript">-->
+<!--          // Kiểm tra nhập số không âm-->
+<!--          var numberInputs = document.querySelectorAll('input[type="number"]');-->
+<!--          numberInputs.forEach(function(input) {-->
+<!--            input.addEventListener('input', function() {-->
+<!--              if (parseFloat(input.value) < 0) {-->
+<!--                input.value = 0;-->
+<!--              }-->
+<!--            });-->
+<!--          });-->
+<!--          var namXBInput = document.getElementById('namXB');-->
 
-          namXBInput.addEventListener('input', function() {
-            var namXB = parseInt(namXBInput.value);
-            var currentYear = new Date().getFullYear();
+<!--          namXBInput.addEventListener('input', function() {-->
+<!--            var namXB = parseInt(namXBInput.value);-->
+<!--            var currentYear = new Date().getFullYear();-->
 
-            if (namXB < 1900 || namXB > currentYear) {
-              namXBInput.setCustomValidity('Năm xuất bản phải nằm trong khoảng từ 1000 đến ' + currentYear);
-            } else {
-              namXBInput.setCustomValidity('');
-            }
-          });
-        </script>
+<!--            if (namXB < 1900 || namXB > currentYear) {-->
+<!--              namXBInput.setCustomValidity('Năm xuất bản phải nằm trong khoảng từ 1000 đến ' + currentYear);-->
+<!--            } else {-->
+<!--              namXBInput.setCustomValidity('');-->
+<!--            }-->
+<!--          });-->
+<!--        </script>-->
 
       </div>
     </div>
@@ -432,14 +432,23 @@
     if (array[2].value == "") {
       document.querySelector('.check_namxb').innerHTML = "Năm xuất bản không được để trống!";
       event.preventDefault();
+    } else if(array[2].value <= 1000 || array[2].value >=2023) {
+      document.querySelector('.check_namxb').innerHTML = "Năm xuất bản phải từ năm 1000 đến năm 2023";
+      event.preventDefault();
+    }  else if(!numberRegex.test(array[2].value)) {
+      document.querySelector('.check_namxb').innerHTML = "Vui lòng chỉ nhập số nguyên dương";
+      event.preventDefault();
     } else {
       document.querySelector('.check_namxb').innerHTML = "";
     }
     if (array[3].value == "") {
       document.querySelector('.check_soluong').innerHTML = "Vui lòng nhập số lượng!";
       event.preventDefault();
-    }  else if(!numberRegex.test(array[3].value)) {
-      document.querySelector('.check_soluong').innerHTML = "Vui lòng chỉ nhập số!";
+    } else if (array[3].value <=0 ) {
+      document.querySelector('.check_soluong').innerHTML = "Số lượng phải lớn hơn 0";
+      event.preventDefault();
+    } else if(!numberRegex.test(array[3].value)) {
+      document.querySelector('.check_soluong').innerHTML = "Vui lòng chỉ nhập số nguyên dương";
       event.preventDefault();
     } else {
       document.querySelector('.check_soluong').innerHTML = "";

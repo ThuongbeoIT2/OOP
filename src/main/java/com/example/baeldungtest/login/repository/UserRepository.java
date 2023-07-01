@@ -14,6 +14,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query("select o from users o where o.email=:email")
     Optional<User> findByEmail(String email);
+
     @Query("select o from users o where o.enabled=true and o.roles.size=1 order by o.userID asc" )
     List<User> getAllUser();
 }

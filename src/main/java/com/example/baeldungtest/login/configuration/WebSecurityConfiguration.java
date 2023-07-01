@@ -43,7 +43,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers(loginPage).permitAll()
-                .antMatchers("/registration").permitAll()
+
 //                .antMatchers("/user/**").hasAuthority("USER")
                 .antMatchers("/admin/listuser").hasAuthority("ADMIN")
                 .antMatchers("/admin/registration").hasAuthority("ADMIN")
@@ -70,7 +70,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .invalidSessionUrl(loginPage); // Đường dẫn chuyển hướng khi phiên không hợp lệ
     }
-
     @Override
     public void configure(WebSecurity web) throws Exception {
         web

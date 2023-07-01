@@ -104,8 +104,8 @@ public class LoginController {
             return "registration";
         } else {
             User newAccount=service.registerNewUserAccount(user);
-            String appUrl ="http://Duythuong.com";
-            System.out.println(appUrl);
+//            String appUrl ="http://Duythuong.com";
+//            System.out.println(appUrl);
 //            eventPublisher.publishEvent(new OnRegistrationCompleteEvent(newAccount,
 //                    request.getLocale(), appUrl));  Hiện tại đang chưa bắt được sự kiện Lỗi TLS
             System.out.println("new acc" + newAccount);

@@ -386,6 +386,8 @@
 <script>
     document.getElementById("form").addEventListener("submit", function(event) {
         var array = document.getElementsByTagName('input');
+        const startDate = new Date(array[0].value);
+        const endDate = new Date(array[1].value);
         var numberRegex = /^\d+$/;
         if (array[0].value == "") {
             document.querySelector('.check_startDate').innerHTML = "Ngày lập phiếu không được để trống!";
@@ -396,14 +398,20 @@
         if (array[1].value == "") {
             document.querySelector('.check_endDate').innerHTML = "Ngày kết thúc không được để trống!";
             event.preventDefault();
+        } else if(endDate <= startDate) {
+            document.querySelector('.check_endDate').innerHTML = "Ngày kết thúc phải lớn hơn ngày lập phiếu";
+            event.preventDefault();
         } else {
             document.querySelector('.check_endDate').innerHTML = "";
         }
         if (array[2].value == "") {
             document.querySelector('.check_sodong').innerHTML = "Số dòng mượn không được để trống!";
             event.preventDefault();
-        }  else if(!numberRegex.test(array[2].value)) {
-            document.querySelector('.check_sodong').innerHTML = "Vui lòng chỉ nhập số!";
+        } else if (array[2].value <=0 ) {
+            document.querySelector('.check_sodong').innerHTML = "Số dòng mượn phải lớn hơn 0";
+            event.preventDefault();
+        } else if(!numberRegex.test(array[2].value)) {
+            document.querySelector('.check_sodong').innerHTML = "Vui lòng chỉ nhập số nguyên dương";
             event.preventDefault();
         } else {
             document.querySelector('.check_sodong').innerHTML = "";

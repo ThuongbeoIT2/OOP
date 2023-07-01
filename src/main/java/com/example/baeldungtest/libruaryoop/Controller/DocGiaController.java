@@ -63,7 +63,7 @@ public class DocGiaController {
 
         docGiaService.updateDocGia(docGia);
         System.out.println(docGia);
-        return "redirect:/list-docgia";
+        return "redirect:/capthe-docgia";
     }
 
     @GetMapping("/delete-docgia/{maDocGia}")

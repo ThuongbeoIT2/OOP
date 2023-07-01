@@ -309,6 +309,14 @@
         </div>
     </div>
 </div>
+<div th:if="${displayAlert}">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        alert([[${error}]]); // Display the alert with the error message
+        /*]]>*/
+    </script>
+</div>
+
 <script>
     const searchInput = document.getElementById('searchInput');
     const table = document.getElementById('checkAll');

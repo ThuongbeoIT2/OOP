@@ -380,7 +380,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm" style="display: flex; justify-content: center;align-items: center">
-                                    <label style="width: 118px;">Số lượng</label>
+                                    <label style="width: 118px;">Số lượng <span class="req">*</span></label>
                                     <select class="form-control" style="border-radius: 7px" th:field="*{chiTietMuonList[__${st.index}__].soLuongMuon}">
                                         <option th:each="i : ${#numbers.sequence(1, 5)}" th:value="${i}" th:text="${i}"></option>
                                     </select>

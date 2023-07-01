@@ -364,20 +364,20 @@
                   <div style="color: red;" name="name_autocheck" class="autocheck check_endDate"/>
                 </div>
                 <!-- Tên -->
-                <div class="formRow">
-                  <div class="formValidate">
-                    <label class="formLeft" for="param_name">Tên Độc Giả <span class="req">*</span></label>
-                    <div class="formRight">
-                      <select class="form-control select2" th:field="*{docGia.maDocGia}">
-                        <option label="Choose one" value=""></option>
-                        <th:block th:each="u : ${listDocGia}">
-                          <option th:value="${u.maDocGia}" th:utext="${u.maDocGia}"></option>
-                        </th:block>
-                      </select>
-                    </div>
-                  </div>
-                  <div style="color: red;" name="name_autocheck" class="autocheck check_docgia"/>
-                </div>
+<!--                <div class="formRow">-->
+<!--                  <div class="formValidate">-->
+<!--                    <label class="formLeft" for="param_name">Tên Độc Giả <span class="req">*</span></label>-->
+<!--                    <div class="formRight">-->
+<!--                      <select class="form-control select2" th:field="*{docGia.maDocGia}">-->
+<!--                        <option label="Choose one" value=""></option>-->
+<!--                        <th:block th:each="u : ${listDocGia}">-->
+<!--                          <option th:value="${u.maDocGia}" th:utext="${u.maDocGia}"></option>-->
+<!--                        </th:block>-->
+<!--                      </select>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                  <div style="color: red;" name="name_autocheck" class="autocheck check_docgia"/>-->
+<!--                </div>-->
                 <!-- Tên -->
                 <div class="col-lg">
                   <input class="form-control" style="border-radius: 10px" th:field="${thetv.soThe}" th:value="${soThe}" placeholder="" type="hidden" hidden>
@@ -398,6 +398,8 @@
   document.getElementById("form").addEventListener("submit", function(event) {
     var array = document.getElementsByTagName('input');
     var selectInput = document.getElementsByTagName('select');
+    const startDate = new Date(array[0].value);
+    const endDate = new Date(array[1].value);
     if (array[0].value == "") {
       document.querySelector('.check_startDate').innerHTML = "Ngày bắt đầu không được để trống!";
       event.preventDefault();
@@ -407,15 +409,18 @@
     if (array[1].value == "") {
       document.querySelector('.check_endDate').innerHTML = "Ngày kết thúc không được để trống!";
       event.preventDefault();
+    }  else if(endDate <= startDate) {
+      document.querySelector('.check_endDate').innerHTML = "Ngày kết thúc phải lớn hơn ngày bắt đầu";
+      event.preventDefault();
     } else {
       document.querySelector('.check_endDate').innerHTML = "";
     }
-    if (selectInput[0].value == "") {
-      document.querySelector('.check_docgia').innerHTML = "Mã độc giả không được để trống!";
-      event.preventDefault();
-    } else {
-      document.querySelector('.check_docgia').innerHTML = "";
-    }
+    // if (selectInput[0].value == "") {
+    //   document.querySelector('.check_docgia').innerHTML = "Mã độc giả không được để trống!";
+    //   event.preventDefault();
+    // } else {
+    //   document.querySelector('.check_docgia').innerHTML = "";
+    // }
   });
 </script>
 </body>

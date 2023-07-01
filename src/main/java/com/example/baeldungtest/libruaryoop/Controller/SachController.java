@@ -11,31 +11,23 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.servlet.http.HttpSession;
-
 @Controller
 public class SachController {
     @Autowired
     private SachService sachService;
     @GetMapping("/list-sach")
     public String index(Model model) {
-
         model.addAttribute("listTrue", sachService.findAllCheckTrue());
         return "admin/sach/list_sach";
     }
     @GetMapping("/luutru-sach")
-    public String Luutru(Model model,HttpSession session) {
-
-
+    public String Luutru(Model model) {
         model.addAttribute("listFalse", sachService.findAllCheckFalse());
         return "admin/sach/luutru_sach";
     }
     @GetMapping("/add-sach")
     public String addSach(Model model) {
-
-
         model.addAttribute("sach", new Sach());
-
         return "admin/sach/add_sach";
     }
     @PostMapping("/add-sach")
@@ -50,12 +42,8 @@ public class SachController {
         sachService.addSach(sach);
         return "redirect:/list-sach";
     }
-
-//
-
     @GetMapping("/edit-sach/{maSach}")
     public String editSach(Model model, @PathVariable Long maSach) {
-
         Sach sach = sachService.findSachById(maSach);
         model.addAttribute("sach", sach);
         return "admin/sach/edit_sach";
@@ -82,16 +70,20 @@ public class SachController {
 
     @GetMapping("/thongke-sach")
     public String THONGKE(Model model) {
-
-
-        model.addAttribute("listTk", sachService.findSachBySoLuong(5));
+        model.addAttribute("listTk",sachService.findSachBySoLuong(5));
         return "admin/thongke/thongke_sach";
     }
     @GetMapping("/add-sach/{maSach}")
     public String NhapThem(@PathVariable("maSach") Long maSach, Model model) {
-
         Count count=new Count();
         count.setMaSach(maSach);
+        Sach sach=sachService.findSachById(maSach);
+//        if(sach==null){
+//           String message="Sách có mã vừa nhập không tồn tại";
+//           model.addAttribute("error",message);
+//            model.addAttribute("displayAlert", true);
+//           return  "admin/thongke/thongke_sach";
+//        }
         model.addAttribute("count", count);
         System.out.println(count);
         return "admin/sach/import_count";

@@ -354,7 +354,7 @@
                   <label class="formLeft" for="param_name">Năm Xuất Bản <span class="req">*</span></label>
                   <div class="formRight">
                 <span class="oneTwo">
-                  <input name="name" id="namXB" _autocheck="true" type="number" min="1000" max="9999" th:field="${sach.namXB}" />
+                  <input name="name" id="namXB" _autocheck="true" type="text" th:field="${sach.namXB}" />
                 </span>
                   </div>
                 </div>
@@ -400,21 +400,21 @@
         </div>
       </form>
 
-        <script type="text/javascript">
-          // Kiểm tra giá trị nhập của trường "Năm Xuất Bản"
-          var namXBInput = document.getElementById('namXB');
+<!--        <script type="text/javascript">-->
+<!--          // Kiểm tra giá trị nhập của trường "Năm Xuất Bản"-->
+<!--          var namXBInput = document.getElementById('namXB');-->
 
-          namXBInput.addEventListener('input', function() {
-            var namXB = parseInt(namXBInput.value);
-            var currentYear = new Date().getFullYear();
+<!--          namXBInput.addEventListener('input', function() {-->
+<!--            var namXB = parseInt(namXBInput.value);-->
+<!--            var currentYear = new Date().getFullYear();-->
 
-            if (namXB < 1900 || namXB > currentYear) {
-              namXBInput.setCustomValidity('Năm xuất bản phải nằm trong khoảng từ 1000 đến ' + currentYear);
-            } else {
-              namXBInput.setCustomValidity('');
-            }
-          });
-        </script>
+<!--            if (namXB < 1900 || namXB > currentYear) {-->
+<!--              namXBInput.setCustomValidity('Năm xuất bản phải nằm trong khoảng từ 1000 đến ' + currentYear);-->
+<!--            } else {-->
+<!--              namXBInput.setCustomValidity('');-->
+<!--            }-->
+<!--          });-->
+<!--        </script>-->
       </div>
     </div>
   </div>
@@ -440,16 +440,25 @@
     if (array[2].value == "") {
       document.querySelector('.check_namxb').innerHTML = "Năm xuất bản không được để trống!";
       event.preventDefault();
-    } else {
+    } else if(array[2].value <= 1000 || array[2].value >=2023) {
+      document.querySelector('.check_namxb').innerHTML = "Năm xuất bản phải từ năm 1000 đến năm 2023";
+      event.preventDefault();
+    }  else if(!numberRegex.test(array[2].value)) {
+      document.querySelector('.check_namxb').innerHTML = "Vui lòng chỉ nhập số nguyên dương";
+      event.preventDefault();
+    }else {
       document.querySelector('.check_namxb').innerHTML = "";
     }
     if (array[3].value == "") {
       document.querySelector('.check_soluong').innerHTML = "Vui lòng nhập số lượng!";
       event.preventDefault();
-    }  else if(!numberRegex.test(array[3].value)) {
-      document.querySelector('.check_soluong').innerHTML = "Vui lòng chỉ nhập số!";
+    } else if (array[3].value <=0 ) {
+      document.querySelector('.check_soluong').innerHTML = "Số lượng phải lớn hơn 0";
       event.preventDefault();
-    } else {
+    } else if(!numberRegex.test(array[3].value)) {
+      document.querySelector('.check_soluong').innerHTML = "Vui lòng chỉ nhập số nguyên dương";
+      event.preventDefault();
+    }  else {
       document.querySelector('.check_soluong').innerHTML = "";
     }
     if (array[4].value == "") {

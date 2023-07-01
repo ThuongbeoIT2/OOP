@@ -70,9 +70,9 @@ public class UserService implements IUserService {
         user.setRoles(roles);
         System.out.println(userRole);
         userRepository.save(user);
-        String token = UUID.randomUUID().toString();
-        System.out.println(token);
-        createVerificationToken(user, token);
+//        String token = UUID.randomUUID().toString();
+//        System.out.println(token);
+//        createVerificationToken(user, token);
         return user;
     }
 

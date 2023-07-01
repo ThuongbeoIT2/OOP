@@ -124,13 +124,12 @@
   document.getElementById("form").addEventListener("submit", function(event) {
     var array = document.getElementsByTagName('input');
     var numberRegex = /^\d+$/;
-    var countValue = parseInt(array[1].value); // Parse the value as an integer
 
     if (array[1].value === "") {
       document.querySelector('.check_soluong').innerHTML = "Số lượng không được để trống!";
       event.preventDefault();
-    } else if (!numberRegex.test(array[1].value) || countValue < 0) {
-      document.querySelector('.check_soluong').innerHTML = "Vui lòng nhập không âm!";
+    } else if (!numberRegex.test(array[1].value)) {
+      document.querySelector('.check_soluong').innerHTML = "Vui lòng nhập số nguyên dương";
       event.preventDefault();
     } else {
       document.querySelector('.check_soluong').innerHTML = "";

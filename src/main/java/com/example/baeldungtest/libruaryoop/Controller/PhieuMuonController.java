@@ -27,29 +27,22 @@ public class PhieuMuonController {
     private SachService sachService;
 
     @GetMapping("/list-phieumuon")
-    public String index(Model model, HttpSession session) {
-
-
+    public String index(Model model) {
         model.addAttribute("listTrue", phieuMuonService.findAllCheckTrue());
-        model.addAttribute("listFalse", phieuMuonService.findAllCheckFalse());
         return "admin/phieumuon/list_phieumuon";
     }
     @GetMapping("/queue-phieumuon")
-    public String HangDoi(Model model, HttpSession session) {
-
-
+    public String HangDoi(Model model) {
         model.addAttribute("listFalse", phieuMuonService.findAllCheckFalse());
         return "admin/phieumuon/hangdoi_phieumuon";
     }
     @GetMapping("/list-luutru")
-    public String Store(Model model,HttpSession session) {
-
+    public String Store(Model model) {
         model.addAttribute("listluutru", phieuMuonService.findAllCheckLuutru());
         return "admin/phieumuon/list_luutru";
     }
     @GetMapping("/add-phieumuon")
-    public String addPhieuMuon(Model model,HttpSession session) {
-
+    public String addPhieuMuon(Model model) {
         model.addAttribute("phieuMuon", new PhieuMuon());
         return "admin/phieumuon/add_phieumuon";
     }
@@ -65,13 +58,9 @@ public class PhieuMuonController {
         return "redirect:/list-phieumuon";
     }
 
-////
-
     @GetMapping("/edit-phieumuon/{maPhieuMuon}")
-    public String editPhieuMoi(Model model, @PathVariable Long maPhieuMuon,HttpSession session) {
-
+    public String editPhieuMoi(Model model, @PathVariable Long maPhieuMuon) {
         PhieuMuon phieuMuon = phieuMuonService.findPhieuMuonById(maPhieuMuon);
-
         model.addAttribute("phieuMuon", phieuMuon);
         return "admin/phieumuon/edit_phieumuon";
     }
@@ -79,13 +68,11 @@ public class PhieuMuonController {
     @PostMapping("/update-phieumuon")
     public String editPhieuMuon(@ModelAttribute("phieumuon") PhieuMuon phieuMuon) {
         phieuMuonService.updatePhieuMuon(phieuMuon);
-
         return "redirect:/list-phieumuon";
     }
 
     @GetMapping("/delete-phieumuon/{maPhieuMuon}")
-    public String deleteById(@PathVariable("maPhieuMuon") Long maPhieuMuon,HttpSession session) {
-
+    public String deleteById(@PathVariable("maPhieuMuon") Long maPhieuMuon) {
         phieuMuonService.deleteById(maPhieuMuon);
         return "redirect:/list-phieumuon";
     }
@@ -95,7 +82,6 @@ public class PhieuMuonController {
         phieuMuonService.changeById(maPhieuMuon);
         return "redirect:/list-phieumuon";
     }
-    ///////////////////
     @GetMapping("/list-chitietmuon/{maPhieuMuon}")
     public String ChiTietPhieu(Model model,@PathVariable("maPhieuMuon") Long maPhieuMuon,HttpSession session) {
 
@@ -107,19 +93,17 @@ public class PhieuMuonController {
     //////
     @GetMapping("/add-chitietphieu/{maPhieuMuon}")
     public String addImport(Model model, @PathVariable Long maPhieuMuon){
-
         PhieuMuon phieuMuondto = phieuMuonService.findPhieuMuonById(maPhieuMuon);
         model.addAttribute("pmdto", phieuMuondto);
         model.addAttribute("phieumuon",phieuMuonService.findAllCheckFalse());
         model.addAttribute("chitiet", new ChiTietMuon());
         model.addAttribute("sachmuon", sachService.getSachMuon());
 
-//        List<Product> products = new ArrayList<>();
         ChiTietMuonDto chiTietMuonDto = new ChiTietMuonDto();
         for (int i = 0; i < phieuMuondto.getSoDongMuon(); i++) {
             chiTietMuonDto.addChiTietMuon(new ChiTietMuon());
         }
-        model.addAttribute("sach",sachService.findAllCheckTrue());
+//        model.addAttribute("sach",sachService.findAllCheckTrue());
         model.addAttribute("chitietList", chiTietMuonDto);
         return "admin/phieumuon/add_chitiet";
     }
@@ -153,7 +137,7 @@ public class PhieuMuonController {
         return "redirect:/list-phieumuon";
     }
     @GetMapping("/delete-chitietphieu/{maPhieuMuon}")
-    public String deleteById(Model model,@PathVariable("maPhieuMuon") Long maPhieuMuon,HttpSession session) {
+    public String deleteById(Model model,@PathVariable("maPhieuMuon") Long maPhieuMuon) {
 
         List<ChiTietMuon> chiTietMuonList = chiTietMuonService.findAllPhieuMuon(maPhieuMuon);
         chiTietMuonList.forEach(p->{
