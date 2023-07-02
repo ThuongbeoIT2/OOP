@@ -296,7 +296,7 @@
 
             <td style="width:55px;">Chỉnh Sửa</td>
             <td style="width:55px;">Hiển Thị Nội Dung</td>
-            <td style="width:55px;">Lưu Trữ</td>
+            <td style="width:55px;">Phiếu Thu</td>
           </tr>
           </thead>
           <th:block th:each=" pmTrue : ${listTrue}">
@@ -311,7 +311,7 @@
               <td><a th:href="@{'/list-chitietmuon/'+ ${pmTrue.maPhieuMuon}}" > Hiển thị</a></td>
               <td><a class="btn btn-sm btn-white" th:href="@{'/delete-chitietphieu/'+ ${pmTrue.maPhieuMuon}}"
                      onclick="return confirm('Bạn có chắc không?')">
-                Ẩn
+                Thu hồi
               </a>
               </td>
             </tr>

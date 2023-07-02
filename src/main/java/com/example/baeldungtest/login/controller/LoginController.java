@@ -1,7 +1,6 @@
 package com.example.baeldungtest.login.controller;
 
 
-import com.example.baeldungtest.Exception.UserAlreadyExistException;
 import com.example.baeldungtest.login.dtos.UserDTO;
 import com.example.baeldungtest.login.model.User;
 import com.example.baeldungtest.login.service.IUserService;
@@ -74,7 +73,7 @@ public class LoginController {
             }
             else {
                 bindingResult.rejectValue("password", "error.user", "Invalid email or password");
-                return "redirect:/login";
+                return "login";
             }
 
         }else {
@@ -93,14 +92,17 @@ public class LoginController {
         return "registration";
     }
     @PostMapping(value = "/admin/registration")
-    public String createNewUser(@Valid UserDTO user, BindingResult bindingResult, Model model) throws UserAlreadyExistException {
+    public String createNewUser(@Valid UserDTO user, BindingResult bindingResult, Model model){
         Optional<User> userExists = service.findUserByEmail(user.getEmail().trim());
         if (userExists.isPresent()) {
             bindingResult.rejectValue("email", "error.user",
-                    "There is already a user registered with the user name provided");
+                    "Email đã đăng ký với tài khoản khác. Vui lòng thử lại.");
+
         }
+        System.out.println(bindingResult.hasErrors());
         if (bindingResult.hasErrors()) {
             model.addAttribute("user", user);
+            model.addAttribute("errorMessage", "Có lỗi xảy ra. Email đã tồn tại hoặc mật khẩu không khớp.");
             return "registration";
         } else {
             User newAccount=service.registerNewUserAccount(user);
@@ -131,6 +133,57 @@ public class LoginController {
         return "redirect:/admin/listuser";
     }
 
+
+    /// Đổi mật khẩu
+    @GetMapping("/resetpassword")
+    public String resetPassword(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Optional<User> user = service.findUserByEmail(auth.getName());
+        System.out.println(user.get());
+        model.addAttribute("user", service.findUserByEmail(user.get().getEmail()));
+        return "resetpassword";
+    }
+
+    @PostMapping("/confirmreset")
+    public String confirmReset(@RequestParam(name = "oldpassword", required = true) String oldPassword,
+                               @RequestParam(name = "password", required = true) String password) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Optional<User> user = service.findUserByEmail(auth.getName());
+        System.out.println(user.get());
+        User existingUser = service.findUserByEmail(user.get().getEmail()).orElse(null);
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        //So sánh với mật khẩu mã hóa
+        String oldEncodedPassword = passwordEncoder.encode(oldPassword);
+
+        if (passwordEncoder.matches(oldPassword, existingUser.getPassword())) {   //Dùng equal là cút
+            //So sánh với mật khẩu mã hóa
+            String newEncodedPassword = passwordEncoder.encode(password);
+            existingUser.setPassword(newEncodedPassword);
+            service.saveRegisteredUser(existingUser);
+            return "redirect:/home";
+        } else {
+            return "redirect:/resetpassword";
+        }
+    }
+
+
+
+    @GetMapping(value = "/home")
+    public String home(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Optional<User> user = service.findUserByEmail(auth.getName());
+        System.out.println(user.get().getPassword());
+        model.addAttribute("userName", "Welcome " + user.get().getEmail());
+        model.addAttribute("userFullName", user.get().getFirstname() + " " + user.get().getLastname());
+        if(user.get().getRoles().size()==2){
+            return "/admin/home";
+        } else {
+            return "/admin/homeuser";
+        }
+
+    }
+}
 // Để sau
 //    @GetMapping("/registrationConfirm")
 //    public String confirmRegistration(
@@ -189,53 +242,3 @@ public class LoginController {
 //
 //        return email;
 //    }
-    /// Đổi mật khẩu
-    @GetMapping("/resetpassword")
-    public String resetPassword(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Optional<User> user = service.findUserByEmail(auth.getName());
-        System.out.println(user.get());
-        model.addAttribute("user", service.findUserByEmail(user.get().getEmail()));
-        return "resetpassword";
-    }
-
-    @PostMapping("/confirmreset")
-    public String confirmReset(@RequestParam(name = "oldpassword", required = true) String oldPassword,
-                               @RequestParam(name = "password", required = true) String password) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Optional<User> user = service.findUserByEmail(auth.getName());
-        System.out.println(user.get());
-        User existingUser = service.findUserByEmail(user.get().getEmail()).orElse(null);
-
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        //So sánh với mật khẩu mã hóa
-        String oldEncodedPassword = passwordEncoder.encode(oldPassword);
-
-        if (passwordEncoder.matches(oldPassword, existingUser.getPassword())) {   //Dùng equal là cút
-            //So sánh với mật khẩu mã hóa
-            String newEncodedPassword = passwordEncoder.encode(password);
-            existingUser.setPassword(newEncodedPassword);
-            service.saveRegisteredUser(existingUser);
-            return "redirect:/home";
-        } else {
-            return "redirect:/resetpassword";
-        }
-    }
-
-
-
-    @GetMapping(value = "/home")
-    public String home(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Optional<User> user = service.findUserByEmail(auth.getName());
-        System.out.println(user.get().getPassword());
-        model.addAttribute("userName", "Welcome " + user.get().getEmail());
-        model.addAttribute("userFullName", user.get().getFirstname() + " " + user.get().getLastname());
-        if(user.get().getRoles().size()==2){
-            return "/admin/home";
-        } else {
-            return "/admin/homeuser";
-        }
-
-    }
-}

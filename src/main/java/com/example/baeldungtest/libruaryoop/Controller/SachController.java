@@ -78,12 +78,6 @@ public class SachController {
         Count count=new Count();
         count.setMaSach(maSach);
         Sach sach=sachService.findSachById(maSach);
-//        if(sach==null){
-//           String message="Sách có mã vừa nhập không tồn tại";
-//           model.addAttribute("error",message);
-//            model.addAttribute("displayAlert", true);
-//           return  "admin/thongke/thongke_sach";
-//        }
         model.addAttribute("count", count);
         System.out.println(count);
         return "admin/sach/import_count";

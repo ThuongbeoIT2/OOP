@@ -1,6 +1,5 @@
 package com.example.baeldungtest.login.service;
 
-import com.example.baeldungtest.Exception.UserAlreadyExistException;
 import com.example.baeldungtest.login.dtos.UserDTO;
 import com.example.baeldungtest.login.model.Role;
 import com.example.baeldungtest.login.model.User;
@@ -52,11 +51,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User registerNewUserAccount(UserDTO userDto) throws UserAlreadyExistException {
-        if (emailExist(userDto.getEmail())) {
-            throw new UserAlreadyExistException("There is an account with that email address: " + userDto.getEmail());
-        }
-
+    public User registerNewUserAccount(UserDTO userDto) {
         User user = new User();
         user.setFirstname(userDto.getFirstName());
         user.setLastname(userDto.getLastName());

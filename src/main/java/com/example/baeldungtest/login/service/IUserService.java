@@ -1,7 +1,6 @@
 package com.example.baeldungtest.login.service;
 
 
-import com.example.baeldungtest.Exception.UserAlreadyExistException;
 import com.example.baeldungtest.login.dtos.UserDTO;
 import com.example.baeldungtest.login.model.User;
 import com.example.baeldungtest.login.model.VerificationToken;
@@ -13,7 +12,7 @@ public interface IUserService {
     List<User> getAllUser();
     Optional<User> findUserByEmail(String email);
     void DisableAccount(String email);
-    User registerNewUserAccount(UserDTO userDto) throws UserAlreadyExistException;
+    User registerNewUserAccount(UserDTO userDto);
     User getUser(String verificationToken);
     VerificationToken getVerificationToken(String verificationToken);
     void saveRegisteredUser(User user);
