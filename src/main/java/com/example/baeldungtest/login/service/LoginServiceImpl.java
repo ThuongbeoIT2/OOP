@@ -75,7 +75,7 @@ public class LoginServiceImpl implements LoginService {
         email.setSubject(subject);
         email.setText(body);
         email.setTo(user.getEmail());
-        email.setFrom("hoangtuananh1772003@gmail.com");
+        email.setFrom("thuong0205966@huce.edu.vn");
         return email;
     }
 }

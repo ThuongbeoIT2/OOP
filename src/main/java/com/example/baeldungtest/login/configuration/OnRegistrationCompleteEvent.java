@@ -1,5 +1,6 @@
 package com.example.baeldungtest.login.configuration;
 
+
 import com.example.baeldungtest.login.model.User;
 import org.springframework.context.ApplicationEvent;
 

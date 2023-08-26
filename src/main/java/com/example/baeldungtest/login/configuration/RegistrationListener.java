@@ -1,12 +1,10 @@
 package com.example.baeldungtest.login.configuration;
 
+import HaNoi.QA.libPersonal.EmailMix;
 import com.example.baeldungtest.login.model.User;
 import com.example.baeldungtest.login.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.MessageSource;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -18,15 +16,8 @@ public class RegistrationListener implements
     @Autowired
     private IUserService service;
 
-    @Autowired
-    private MessageSource messages;
 
-    @Autowired
-    private JavaMailSender mailSender;
-    @Autowired
-    public RegistrationListener(JavaMailSender mailSender) {
-        this.mailSender = mailSender;
-    }
+
     @Override
     public void onApplicationEvent(OnRegistrationCompleteEvent event) {
         this.confirmRegistration(event);
@@ -35,7 +26,9 @@ public class RegistrationListener implements
     private void confirmRegistration(OnRegistrationCompleteEvent event) {
         User user = event.getUser();
         String token = UUID.randomUUID().toString();
+
         service.createVerificationToken(user, token);
+
 
         String recipientAddress = user.getEmail();
         String subject = "Xác nhận đăng ký tài khoản";
@@ -43,11 +36,10 @@ public class RegistrationListener implements
                 = event.getAppUrl() + "/regitrationConfirm.html?token=" + token;
         String message = "Nhấp vào liên kết sau để xác nhận đăng ký tài khoản:\n" + confirmationUrl;
 
-        SimpleMailMessage email = new SimpleMailMessage();
-        email.setTo(recipientAddress);
-        email.setSubject(subject);
-        email.setText(message);
+        EmailMix e = new EmailMix("thuong0205966@huce.edu.vn", "ztdzxxoqvmbvsfuk",0);
 
-        mailSender.send(email);
+        e.sendContentToVer2(recipientAddress,subject,message);
+
+
     }
 }

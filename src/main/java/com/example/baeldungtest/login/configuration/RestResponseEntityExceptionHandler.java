@@ -1,6 +1,5 @@
 package com.example.baeldungtest.login.configuration;
 
-import com.example.baeldungtest.Exception.UserNotFoundException;
 import com.example.baeldungtest.login.model.GenericResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -19,7 +18,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @Autowired
     private MessageSource messages;
 
-    @ExceptionHandler({ UserNotFoundException.class })
+    @ExceptionHandler({ RuntimeException.class })
     public ResponseEntity<Object> handleUserNotFound(RuntimeException ex, WebRequest request) {
         logger.error("404 Status Code", ex);
         GenericResponse bodyOfResponse = new GenericResponse(

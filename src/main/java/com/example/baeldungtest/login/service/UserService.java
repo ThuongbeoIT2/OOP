@@ -57,17 +57,16 @@ public class UserService implements IUserService {
         user.setLastname(userDto.getLastName());
         user.setEmail(userDto.getEmail());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        user.setEnabled(true);
-
         Optional<Role> userRole = roleRepository.findById(2);
         Set<Role> roles = new HashSet<>();
         roles.add(userRole.get());
         user.setRoles(roles);
         System.out.println(userRole);
         userRepository.save(user);
-//        String token = UUID.randomUUID().toString();
-//        System.out.println(token);
-//        createVerificationToken(user, token);
+        String token = UUID.randomUUID().toString();
+        System.out.println(token);
+        VerificationToken verificationToken = new VerificationToken(token, user);
+        tokenRepository.save(verificationToken);
         return user;
     }
 
@@ -87,20 +86,21 @@ public class UserService implements IUserService {
 
     @Override
     public void saveRegisteredUser(User user) {
-        userRepository.save(user);
+        Optional<User> RS = userRepository.findByEmail(user.getEmail());
+        if(RS.isPresent()){
+            RS.get().setEnabled(true);
+            userRepository.save(user);
+        }
+
     }
 
-    @Override
-    public void createVerificationToken(User user, String token) {
-        VerificationToken verificationToken = new VerificationToken(token, user);
-        tokenRepository.save(verificationToken);
-    }
+
 
     @Override
     public VerificationToken generateNewVerificationToken(String existingToken) {
         VerificationToken oldToken = tokenRepository.findByToken(existingToken);
         if (oldToken == null) {
-            // Existing token not found
+
             return null;
         }
 

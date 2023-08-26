@@ -19,7 +19,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private BCryptPasswordEncoder bCryptPasswordEncoder= new BCryptPasswordEncoder();
 
     @Autowired
     private MyUserDetailsService userDetailsService;
@@ -44,7 +44,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers(loginPage).permitAll()
 
-//                .antMatchers("/user/**").hasAuthority("USER")
+              .antMatchers("/user/**").hasAuthority("USER")
                 .antMatchers("/admin/listuser").hasAuthority("ADMIN")
                 .antMatchers("/admin/registration").hasAuthority("ADMIN")
 //                .antMatchers("/admin/**").hasAuthority("USER")
