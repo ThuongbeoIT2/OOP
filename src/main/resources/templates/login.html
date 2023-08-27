@@ -341,11 +341,16 @@
 
             <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit"
                     th:text="Login"></button>
+            <a th:href="@{/forgotpassword}" class="forgot-password">Quên mật khẩu?</a>
+            <p class="forgot-password-message"></p>
+            <a th:href="@{/resendRegistrationToken}" class="forgot-password">Tài khoản của bạn bị vô hiệu hóa ?</a>
+            <p class="forgot-password-message"></p>
         </form>
+
     </div>
 
 </div>
-</div>
+
 
 <script>
     document.getElementById("form").addEventListener("submit", function (event) {

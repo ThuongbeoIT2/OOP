@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Resend Token</title>
+    <style>
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #9FAFD1;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h2 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .form-container label {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-container input[type="email"],
+        .form-container input[type="text"] {
+            width: 95%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 16px;
+        }
+
+        .form-container .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .form-container .checkbox-container input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        .form-container .terms-label {
+            font-size: 12px;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 12px;
+            background-color: #3b82f6;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #2563eb;
+        }
+        .back-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #f2f2f2;
+            color: #3595f6;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-left: 50px;
+        }
+
+        .back-btn:hover {
+            background-color: #e0e0e0;
+        }
+
+    </style>
+</head>
+<body>
+<section class="bg-gray-50 dark:bg-gray-900">
+    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+            <img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo">
+            <b>Group 6</b>
+        </a>
+
+        <a th:href="@{/home}" class="back-btn">Trở lại trang chủ</a>
+
+        <div class="form-container">
+
+
+            <h2>RESEND VERIFICATION TOKEN</h2>
+
+           <form action="#" th:action="@{/resettoken}"  th:method="post">
+              <div>
+                 <label for="email">Your email</label>
+                  <input type="email" name="email" id="email" placeholder="name@company.com"   required>
+              </div>
+              <div>
+                  <label for="title"> Title</label>
+                 <input type="text" name="title" id="title" placeholder="title" required>
+              </div>
+
+               <button type="submit">Required</button>
+           </form>
+        </div>
+    </div>
+</section>
+</body>
+</html>

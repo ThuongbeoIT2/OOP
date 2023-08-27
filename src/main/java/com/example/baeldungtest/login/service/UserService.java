@@ -94,6 +94,12 @@ public class UserService implements IUserService {
 
     }
 
+    @Override
+    public void createVerificationToken(User user, String token) {
+        System.out.println("Tạo token");
+        VerificationToken verificationToken = new VerificationToken(token, user);
+        tokenRepository.save(verificationToken);
+    }
 
 
     @Override
