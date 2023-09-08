@@ -24,6 +24,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.*;
 
@@ -185,7 +186,8 @@ public class LoginController {
     // Để sau
     @GetMapping("/registrationConfirm.html")
     public String confirmRegistration(
-            Locale locale, Model model, @RequestParam("token") String token) {
+            Locale locale, Model model, HttpServletRequest req, @RequestParam("token") String token) {
+        System.out.println(req.getRequestURI());
         System.out.println("Start account verification");
         System.out.println(token);
 
@@ -268,7 +270,7 @@ public class LoginController {
             help.setEmail(email);
             helpRepository.save(help);
             System.out.println("Tạo yêu cầu thành công cho email:"+ email);
-            return "/successRegister.html";
+            return "successRegister.html";
         }
        return "error.html";
     }

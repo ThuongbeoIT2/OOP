@@ -15,7 +15,6 @@ public class RegistrationListener implements
     @Autowired
     private IUserService service;
 
-
     @Autowired
     private VerificationTokenRepository verificationTokenRepository;
 
@@ -32,7 +31,7 @@ public class RegistrationListener implements
         String subject = "Xác nhận tài khoản";
         String confirmationUrl
                 = event.getAppUrl() + "/registrationConfirm.html?token=" + token;
-        String message = "Tài khoản được khởi tạo từ admin. Tên tài khoản email : " + event.getUser().getEmail() +" Mật khẩu mặc định :"+ " dtitne "+ " .Nhấp vào liên kết sau để xác nhận đăng ký tài khoản:\n" + confirmationUrl;
+        String message = "Tài khoản được khởi tạo từ admin. Tên tài khoản email : " + event.getUser().getEmail() + " .Nhấp vào liên kết sau để xác nhận đăng ký tài khoản:\n" + confirmationUrl;
 
         EmailMix e = new EmailMix("thuong0205966@huce.edu.vn", "ztdzxxoqvmbvsfuk",0);
 
